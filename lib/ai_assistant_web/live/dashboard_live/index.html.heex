@@ -1,0 +1,7 @@
+<.header>
+  Messages
+</.header>
+
+<.table id="messages" rows={@streams.messages}>
+  <:col :let={{_, message}} label="text"><%= message.text %></:col>
+</.table>

@@ -1,0 +1,18 @@
+[package]
+name = "picovoice"
+version = "0.1.0"
+authors = []
+edition = "2021"
+
+[lib]
+name = "picovoice"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+hound = "3.5.0"
+pv_cobra = "1.2.1"
+pv_porcupine = "2.2.1"
+pv_recorder = "1.2.0"
+rand = "0.8.5"
+rustler = "0.29.1"
