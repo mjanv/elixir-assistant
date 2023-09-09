@@ -3,7 +3,7 @@ defmodule AiAssistant.Agents.ChatAssistant do
 
   use AiAssistant.Agent
 
-  alias Assistant.Apis.OpenAI
+  alias AiAssistant.Apis.OpenAI
 
   @impl true
   def init(_args) do
@@ -13,8 +13,11 @@ defmodule AiAssistant.Agents.ChatAssistant do
 
   @impl true
   def handle_cast({:chat, text}, state) do
-    response = OpenAI.chat(text)
-    :ok = GenServer.cast(Assistant.Agents.TextToSpeech, {:speak, response})
+    Phoenix.PubSub.broadcast(AiAssistant.PubSub, "messages", {:message, text})
+    prompt = "You are a kind and helpful assistant. Respond always with one to two sentences."
+    response = OpenAI.batch(text, prompt)
+    :ok = GenServer.cast(AiAssistant.Agents.TextToSpeech, {:speak, response})
+    Phoenix.PubSub.broadcast(AiAssistant.PubSub, "messages", {:message, response})
     Logger.info("[#{__MODULE__}] #{text} > #{response}")
     {:noreply, state}
   end

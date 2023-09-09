@@ -5,8 +5,17 @@ defmodule AiAssistant.Models.Whisper do
 
   @model "openai/whisper-"
   @sizes ["tiny"]
+  @languages ["fr", "en"]
 
-  def build(size) when size in @sizes do
+  defp lang("en") do
+    [{1, 50259}, {2, 50359}, {3, 50363}]
+  end
+
+  defp lang("fr") do
+    [{1, 50265}, {2, 50359}, {3, 50363}]
+  end
+
+  def build(size, language \\ "fr") do
     model = @model <> size
     Logger.info("[#{__MODULE__}] Building speech-to-text #{model} model.")
 
@@ -14,6 +23,9 @@ defmodule AiAssistant.Models.Whisper do
     {:ok, featurizer} = Bumblebee.load_featurizer({:hf, model})
     {:ok, tokenizer} = Bumblebee.load_tokenizer({:hf, model})
     {:ok, config} = Bumblebee.load_generation_config({:hf, model})
+    config = %{config | forced_token_ids: lang(language)}
+
+    Logger.info("[#{__MODULE__}] Speech-to-text #{model} model ready.")
 
     Bumblebee.Audio.speech_to_text(whisper, featurizer, tokenizer, config,
       defn_options: [compiler: EXLA]

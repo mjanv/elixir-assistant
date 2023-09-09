@@ -9,16 +9,9 @@ defmodule AiAssistant.Supervisor do
 
   @impl true
   def init(_args) do
-    children = [
-      # AiAssistant.Repo,
-      # AiAssistant.Agents.TwitchChat,
-      AiAssistant.Agents.WakeWord,
-      {AiAssistant.Agents.SpeechToText, model: "tiny"}
-      # AiAssistant.Agents.ChatAssistant,
-      # AiAssistant.Agents.TextToSpeech,
-      # AiAssistant.Agents.SpeechToSpeaker
-    ]
+    children = [AiAssistant.Repo]
+    pipeline = Application.fetch_env!(:ai_assistant, :pipeline)
 
-    Supervisor.init(children, strategy: :one_for_one)
+    Supervisor.init(children ++ pipeline, strategy: :one_for_one)
   end
 end

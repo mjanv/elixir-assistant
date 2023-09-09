@@ -18,10 +18,10 @@ defmodule AiAssistant.Agents.WakeWord do
   @impl true
   def handle_info(:listen, %{config: config} = state) do
     Logger.info("[#{__MODULE__}] Listening.")
-    path = Picovoice.query(config[:access_token], config[:keyword_path], config[:model_path])
-    :ok = GenServer.cast(Assistant.Agents.SpeechToText, {:transcribe, path})
-
-    Phoenix.PubSub.broadcast(AiAssistant.PubSub, "messages", {:message, "Wake word!"})
+    Picovoice.detect(config[:access_token], config[:keyword_path], config[:model_path])
+    Phoenix.PubSub.broadcast(AiAssistant.PubSub, "messages", {:message, "Oui ?"})
+    path = Picovoice.register(config[:access_token], config[:keyword_path], config[:model_path])
+    :ok = GenServer.cast(AiAssistant.Agents.SpeechToText, {:transcribe, path})
 
     Process.send_after(self(), :listen, @wait)
     {:noreply, state}

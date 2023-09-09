@@ -28,14 +28,16 @@ defmodule AiAssistant.Agents.TwitchChat do
     Logger.info(msg)
 
     if msg =~ "PRIVMSG" do
-      text =
-        String.split(msg, " ")
+      text = msg
+        |> String.split("PRIVMSG")
         |> List.last()
-        |> String.replace(":", "")
+        |> String.split(":")
+        |> List.last()
         |> String.replace("\r", "")
         |> String.replace("\n", "")
+        |> IO.inspect()
 
-      :ok = GenServer.cast(Assistant.Agents.ChatAssistant, {:chat, text})
+      :ok = GenServer.cast(AiAssistant.Agents.ChatAssistant, {:chat, text})
     end
 
     {:ok, state}

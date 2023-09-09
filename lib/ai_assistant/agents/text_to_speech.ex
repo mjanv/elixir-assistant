@@ -13,10 +13,10 @@ defmodule AiAssistant.Agents.TextToSpeech do
 
   @impl true
   def handle_cast({:speak, text}, state) do
-    speech = ElevenLabs.generate(text)
+    speech = ElevenLabs.generate(text) |> IO.inspect()
     path = "test1.mp3"
     File.write!(path, speech)
-    :ok = GenServer.cast(Assistant.Agents.SpeechToSpeaker, {:talk, path})
+    :ok = GenServer.cast(AiAssistant.Agents.SpeechToSpeaker, {:talk, path})
     {:noreply, state}
   end
 end
