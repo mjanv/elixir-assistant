@@ -1,4 +1,4 @@
-defmodule AiAssistant.Application do
+defmodule Assistant.Application do
   @moduledoc false
 
   use Application
@@ -6,8 +6,8 @@ defmodule AiAssistant.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      AiAssistant.Supervisor,
-      AiAssistantWeb.Supervisor
+      Assistant.Supervisor,
+      AssistantWeb.Supervisor
     ]
 
     Supervisor.start_link(children,

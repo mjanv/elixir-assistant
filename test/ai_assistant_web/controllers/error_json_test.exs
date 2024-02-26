@@ -1,12 +1,12 @@
-defmodule AiAssistantWeb.ErrorJSONTest do
-  use AiAssistantWeb.ConnCase, async: true
+defmodule AssistantWeb.ErrorJSONTest do
+  use AssistantWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert AiAssistantWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert AssistantWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
   end
 
   test "renders 500" do
-    assert AiAssistantWeb.ErrorJSON.render("500.json", %{}) ==
+    assert AssistantWeb.ErrorJSON.render("500.json", %{}) ==
              %{errors: %{detail: "Internal Server Error"}}
   end
 end

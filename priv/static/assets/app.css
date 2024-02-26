@@ -881,23 +881,12 @@ select {
   z-index: 50;
 }
 
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
+
 .-m-3 {
   margin: -0.75rem;
-}
-
-.-mx-2 {
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
-}
-
-.-my-0 {
-  margin-top: -0px;
-  margin-bottom: -0px;
-}
-
-.-my-0\.5 {
-  margin-top: -0.125rem;
-  margin-bottom: -0.125rem;
 }
 
 .-my-4 {
@@ -968,10 +957,6 @@ select {
 
 .flex {
   display: flex;
-}
-
-.inline-flex {
-  display: inline-flex;
 }
 
 .table {
@@ -1062,6 +1047,10 @@ select {
   max-width: 48rem;
 }
 
+.max-w-7xl {
+  max-width: 80rem;
+}
+
 .max-w-xl {
   max-width: 36rem;
 }
@@ -1096,6 +1085,10 @@ select {
 
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .items-center {
@@ -1271,10 +1264,6 @@ select {
   fill: #881337;
 }
 
-.fill-zinc-400 {
-  fill: #a1a1aa;
-}
-
 .p-0 {
   padding: 0px;
 }
@@ -1313,16 +1302,6 @@ select {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
-
-.py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-
-.py-0\.5 {
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
 }
 
 .py-1 {
@@ -1371,8 +1350,8 @@ select {
   text-align: right;
 }
 
-.text-\[0\.8125rem\] {
-  font-size: 0.8125rem;
+.text-\[0\.9rem\] {
+  font-size: 0.9rem;
 }
 
 .text-\[2rem\] {
@@ -1424,6 +1403,10 @@ select {
 
 .leading-8 {
   line-height: 2rem;
+}
+
+.tracking-normal {
+  letter-spacing: 0em;
 }
 
 .tracking-tighter {
@@ -1613,11 +1596,6 @@ select {
   color: rgb(63 63 70 / var(--tw-text-opacity));
 }
 
-.hover\:text-zinc-900:hover {
-  --tw-text-opacity: 1;
-  color: rgb(24 24 27 / var(--tw-text-opacity));
-}
-
 .hover\:opacity-40:hover {
   opacity: 0.4;
 }
@@ -1650,10 +1628,6 @@ select {
 .group:hover .group-hover\:bg-zinc-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
-}
-
-.group:hover .group-hover\:fill-zinc-600 {
-  fill: #52525b;
 }
 
 .group:hover .group-hover\:opacity-70 {
@@ -1724,10 +1698,6 @@ select {
     --tw-scale-x: .95;
     --tw-scale-y: .95;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  }
-
-  .sm\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sm\:grid-cols-3 {

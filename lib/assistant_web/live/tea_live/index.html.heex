@@ -1,0 +1,23 @@
+<div class="x-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl">
+    <.simple_form for={@form} phx-submit="save">
+      <.input field={@form[:query]} type="textarea" label="Query" />
+      <:actions>
+        <.button>Save</.button>
+      </:actions>
+    </.simple_form>
+
+    <.async_result :let={tea} assign={@tea}>
+      <:loading>No tea yet...</:loading>
+      <:failed :let={_failure}>there was an error loading the tea</:failed>
+
+      <.header><%= tea.name || "" %> (<%= tea.start_price || "" %>€)</.header>
+
+      <p><%= tea.description || "" %></p>
+
+      <.table id="steps" rows={tea.ingredients || []}>
+        <:col :let={ingredient} label="ingredient"><%= ingredient %></:col>
+      </.table>
+    </.async_result>
+  </div>
+</div>

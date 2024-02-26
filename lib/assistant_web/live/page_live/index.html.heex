@@ -1,0 +1,37 @@
+<div class="grid grid-cols-5 gap-4">
+  <div>
+    <.simple_form for={@form} phx-change="validate" phx-submit="save">
+      <.input field={@form[:query]} type="textarea" label="Query" />
+      <.input field={@form[:stream]} type="checkbox" label="Stream" />
+      <:actions>
+        <.button>Save</.button>
+      </:actions>
+    </.simple_form>
+  </div>
+  <div class="col-span-2">
+    <.async_result :let={recipe} assign={@recipe}>
+      <:loading>No recipe yet...</:loading>
+      <:failed :let={_failure}>there was an error loading the recipe</:failed>
+
+      <.header><%= recipe.title || "" %> (<%= recipe.cook_time || "" %>)</.header>
+
+      <.table id="steps" rows={recipe.steps || []}>
+        <:col :let={step} label="step"><%= step %></:col>
+      </.table>
+    </.async_result>
+  </div>
+  <div class="col-span-2">
+    <.async_result :let={recipe} assign={@recipe}>
+      <:loading>No ingredients yet...</:loading>
+      <:failed :let={_failure}>there was an error loading the ingredients</:failed>
+      <.table id="ingredients" rows={recipe.ingredients}>
+        <:col :let={ingredient} label="name"><%= ingredient.name %></:col>
+        <:col :let={ingredient} label="quantity">
+          <%= ingredient.quantity %> <%= ingredient.unit %>
+        </:col>
+      </.table>
+    </.async_result>
+  </div>
+</div>
+
+<br \ />

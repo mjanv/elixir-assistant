@@ -1,39 +1,38 @@
 import Config
 
-config :ai_assistant, :picovoice,
+config :assistant, :picovoice,
   access_token: System.get_env("PICOVOICE_ACCESS_TOKEN"),
   model_path: "./priv/models/picovoice/porcupine_params_fr.pv",
   keyword_path: "./priv/models/picovoice/Renard_fr_linux_v2_2_0.ppn"
 
-config :ai_assistant, :eleven_labs,
+config :assistant, :eleven_labs,
   api_url: "https://api.elevenlabs.io/v1",
   api_key: System.get_env("ELEVEN_LABS_API_KEY"),
   voice_id: "LcfcDJNUP1GQjkzn1xUU"
 
-config :ai_assistant, :openai,
+config :assistant, :openai,
   api_url: "https://api.openai.com/v1",
   api_key: System.get_env("OPENAI_API_KEY"),
   organisation: System.get_env("OPENAI_ORGANISATION")
 
-config :ai_assistant, :twitch,
+config :assistant, :twitch,
   auth_url: "https://id.twitch.tv/oauth2/token",
   api_url: "https://api.twitch.tv/helix",
   chat_ws: "wss://irc-ws.chat.twitch.tv:443",
   oauth_token: System.get_env("TWITCH_OAUTH_TOKEN"),
   channel: System.get_env("TWITCH_CHANNEL")
 
-config :ai_assistant,
-  ecto_repos: [AiAssistant.Repo],
+config :assistant,
+  ecto_repos: [Assistant.Repo],
   generators: [binary_id: true]
 
-# Configures the endpoint
-config :ai_assistant, AiAssistantWeb.Endpoint,
+config :assistant, AssistantWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: AiAssistantWeb.ErrorHTML, json: AiAssistantWeb.ErrorJSON],
+    formats: [html: AssistantWeb.ErrorHTML, json: AssistantWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: AiAssistant.PubSub,
+  pubsub_server: Assistant.PubSub,
   live_view: [signing_salt: "CUTlQPsj"]
 
 config :esbuild,
@@ -61,5 +60,23 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :phoenix, :json_library, Jason
+
+config :instructor,
+  adapter: Instructor.Adapters.OpenAI,
+  openai: [api_key: System.get_env("OPENAI_API_KEY")]
+
+# openai: [
+#   api_key: "ollama",
+#   api_url: "http://localhost:11434",
+#   models: [
+#     "mistral:7b-instruct-q6_K"
+#   ]
+# ]
+
+config :wallaby,
+  driver: Wallaby.Chrome,
+  base_url: "https://jardin-du-the.com"
+
+config :wallaby, :geckodriver, path: "./geckodriver"
 
 import_config "#{config_env()}.exs"

@@ -1,2 +1,2 @@
-ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(AiAssistant.Repo, :manual)
+ExUnit.start(exclude: [:openai])
+Ecto.Adapters.SQL.Sandbox.mode(Assistant.Repo, :manual)

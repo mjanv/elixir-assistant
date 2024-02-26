@@ -37,3 +37,6 @@ voice-*.tar
 # Audio files
 *.wav
 *.mp3
+
+# Drivers
+chromedriver

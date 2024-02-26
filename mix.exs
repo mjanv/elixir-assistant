@@ -1,9 +1,11 @@
 defmodule Assistant.MixProject do
+  @moduledoc false
+
   use Mix.Project
 
   def project do
     [
-      app: :ai_assistant,
+      app: :assistant,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -15,7 +17,7 @@ defmodule Assistant.MixProject do
 
   def application do
     [
-      mod: {AiAssistant.Application, []},
+      mod: {Assistant.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -25,35 +27,43 @@ defmodule Assistant.MixProject do
 
   defp deps do
     [
-      {:phoenix, "~> 1.7.7"},
+      # Web
+      {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.10"},
-      {:ecto_sqlite3, ">= 0.0.0"},
-      {:phoenix_html, "~> 3.3"},
+      {:ecto_sqlite3, "~> 0.15"},
+      {:phoenix_html, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 0.19.0"},
-      {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.8.0"},
-      {:esbuild, "~> 0.7", runtime: Mix.env() == :dev},
-      {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
+      {:phoenix_live_view, "~> 0.19"},
+      {:floki, "~> 0.35", only: :test},
+      {:phoenix_live_dashboard, "~> 0.8"},
+      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
+      {:gettext, "~> 0.24"},
+      {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.7"},
+      {:dns_cluster, "~> 0.1"},
+      # Backend
+      {:req, "~> 0.4"},
+      {:websockex, "~> 0.4"},
+      {:wallaby, "~> 0.30"},
+      {:rustler, "~> 0.31"},
+      {:membrane_core, "~> 1.0"},
+      {:membrane_file_plugin, "~> 0.16"},
+      {:membrane_portaudio_plugin, "~> 0.18"},
+      {:membrane_ffmpeg_swresample_plugin, "~> 0.19"},
+      {:membrane_raw_audio_format, "~> 0.12"},
+      {:membrane_wav_plugin, "~> 0.10"},
+      {:membrane_mp3_mad_plugin, "~> 0.18"},
+      # Machine learning
+      {:instructor, "~> 0.0.5"},
+      {:bumblebee, "~> 0.5"},
+      {:exla, "~> 0.7"},
+      {:nx, "~> 0.7"},
+      # Monitoring
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.20"},
-      {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"},
-      {:req, "~> 0.3"},
-      {:websockex, "~> 0.4.3"},
-      {:rustler, "~> 0.29.1"},
-      {:bumblebee, "~> 0.3"},
-      {:exla, "~> 0.6"},
-      {:nx, "~> 0.6"},
-      {:membrane_core, "~> 0.12.8"},
-      {:membrane_file_plugin, "~> 0.14.0"},
-      {:membrane_portaudio_plugin, "~> 0.16.1"},
-      {:membrane_ffmpeg_swresample_plugin, "~> 0.17.3"},
-      {:membrane_raw_audio_format, "~> 0.11.0"},
-      {:membrane_wav_plugin, "~> 0.9.1"},
-      {:membrane_mp3_mad_plugin, "~> 0.16.1"},
+      # Developpement tools
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
@@ -63,7 +73,9 @@ defmodule Assistant.MixProject do
       setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
+      quality: ["format --check-formatted", "credo --strict"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      start: ["phx.server"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind default", "esbuild default"],
       "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]

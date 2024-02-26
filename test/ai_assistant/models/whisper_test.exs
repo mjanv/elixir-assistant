@@ -1,9 +1,9 @@
-defmodule AiAssistant.Models.WhisperTest do
+defmodule Assistant.Models.WhisperTest do
   @moduledoc false
 
   use ExUnit.Case
 
-  alias AiAssistant.Models.Whisper
+  alias Assistant.Models.Whisper
 
   @tag timeout: :infinity
   test "Whisper speech-to-text models can be built" do

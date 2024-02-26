@@ -91,7 +91,6 @@ fn query(access_key: &str, keyword_path: &str, model_path: &str) -> String {
         }
     }
 
-    // println!("\r[{}] {:?}", counter, state);
     recorder.stop().expect("Failed to stop audio recording");
 
     let random = Alphanumeric.sample_string(&mut rand::thread_rng(), 16);
@@ -112,5 +111,4 @@ fn query(access_key: &str, keyword_path: &str, model_path: &str) -> String {
     return String::from(path);
 }
 
-
-rustler::init!("Elixir.AiAssistant.Models.Picovoice", [query]);
+rustler::init!("Elixir.Assistant.Models.Picovoice", [query]);

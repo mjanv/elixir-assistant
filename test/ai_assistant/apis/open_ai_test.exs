@@ -1,23 +1,26 @@
-defmodule AiAssistant.Apis.OpenAiTest do
+defmodule Assistant.Apis.OpenAiTest do
   @moduledoc false
 
   use ExUnit.Case
 
-  alias AiAssistant.Apis.OpenAI
+  alias Assistant.Apis.OpenAI
 
-  @tag :skip
-  test "Batch" do
-    text = "Nommes trois plantes."
+  setup do
     prompt = "You are a kind and helpful assistant. Respond always with one to two sentences."
+    {:ok, %{prompt: prompt}}
+  end
+
+  @tag :openai
+  test "Batch", %{prompt: prompt} do
+    text = "Nommes trois plantes."
     response = OpenAI.batch(text, prompt)
 
     assert response == "?"
   end
 
-  @tag :skip
-  test "Stream" do
+  @tag :openai
+  test "Stream", %{prompt: prompt} do
     text = "Nommes trois plantes."
-    prompt = "You are a kind and helpful assistant. Respond always with one to two sentences."
     response = OpenAI.stream(text, prompt)
 
     assert response == "?"

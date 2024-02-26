@@ -1,4 +1,4 @@
-defmodule AiAssistant.DataCase do
+defmodule Assistant.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule AiAssistant.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use AiAssistant.DataCase, async: true`, although
+  by setting `use Assistant.DataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -20,17 +20,17 @@ defmodule AiAssistant.DataCase do
 
   using do
     quote do
-      alias AiAssistant.Repo
+      alias Assistant.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import AiAssistant.DataCase
+      import Assistant.DataCase
     end
   end
 
   setup tags do
-    AiAssistant.DataCase.setup_sandbox(tags)
+    Assistant.DataCase.setup_sandbox(tags)
     :ok
   end
 
@@ -38,7 +38,7 @@ defmodule AiAssistant.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = SQL.Sandbox.start_owner!(AiAssistant.Repo, shared: not tags[:async])
+    pid = SQL.Sandbox.start_owner!(Assistant.Repo, shared: not tags[:async])
     on_exit(fn -> SQL.Sandbox.stop_owner(pid) end)
   end
 
