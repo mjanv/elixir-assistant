@@ -3,22 +3,28 @@ defmodule Assistant.Agents.ChatAssistant do
 
   use Assistant.Agent
 
-  alias Assistant.Apis.OpenAI
+  def handle(state, {:chat, _text}) do
+    # prompt = "You are a kind and helpful assistant. Respond always with one to two sentences."
+    # response = Assistant.Apis.OpenAI.batch(text, prompt)
 
-  @impl true
-  def init(_args) do
-    Logger.info("[#{__MODULE__}] Starting.")
-    {:ok, %{}}
+    Assistant.Agents.DynamicSupervisor.start(Assistant.Agents.ChatAssistant2)
+
+    {state, [{:reply, "???"}, {:chat, "hello"}]}
   end
 
-  @impl true
-  def handle_cast({:chat, text}, state) do
-    Phoenix.PubSub.broadcast(Assistant.PubSub, "messages", {:message, text})
-    prompt = "You are a kind and helpful assistant. Respond always with one to two sentences."
-    response = OpenAI.batch(text, prompt)
-    :ok = GenServer.cast(Assistant.Agents.TextToSpeech, {:speak, response})
-    Phoenix.PubSub.broadcast(Assistant.PubSub, "messages", {:message, response})
-    Logger.info("[#{__MODULE__}] #{text} > #{response}")
-    {:noreply, state}
+  def handle(state, _), do: {state, []}
+end
+
+defmodule Assistant.Agents.ChatAssistant2 do
+  @moduledoc false
+
+  use Assistant.Agent
+
+  def handle(state, {:chat, text}) do
+    # prompt = "You are a kind and helpful assistant. Respond always with one to two sentences."
+    # response = Assistant.Apis.OpenAI.batch(text, prompt)
+    {state, [{:reply, "#{text}!!!"}]}
   end
+
+  def handle(state, _), do: {state, []}
 end

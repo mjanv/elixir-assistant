@@ -13,6 +13,7 @@ defmodule AssistantWeb.Supervisor do
       AssistantWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:assistant, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Assistant.PubSub},
+      AssistantWeb.Presence,
       AssistantWeb.Endpoint
     ]
 

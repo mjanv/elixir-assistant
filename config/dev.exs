@@ -1,15 +1,5 @@
 import Config
 
-config :assistant,
-  pipeline: [
-    # Assistant.Agents.TwitchChat,
-    # Assistant.Agents.WakeWord,
-    # {Assistant.Agents.SpeechToText, model: "small", language: "fr"},
-    # Assistant.Agents.ChatAssistant,
-    # Assistant.Agents.TextToSpeech,
-    # Assistant.Agents.SpeechToSpeaker
-  ]
-
 config :assistant, Assistant.Repo,
   database: Path.expand("../assistant_dev.db", Path.dirname(__ENV__.file)),
   pool_size: 5,

@@ -13,11 +13,13 @@ defmodule Assistant.Supervisor do
       Assistant.Repo,
       {Ecto.Migrator,
        repos: Application.fetch_env!(:assistant, :ecto_repos),
-       skip: System.get_env("RELEASE_NAME") != nil}
+       skip: System.get_env("RELEASE_NAME") != nil},
+      Assistant.Sinks.Supervisor,
+      Assistants.Models.Supervisor,
+      Assistant.Agents.DynamicSupervisor,
+      Assistant.Sinks.DynamicSupervisor
     ]
 
-    pipeline = Application.fetch_env!(:assistant, :pipeline)
-
-    Supervisor.init(children ++ pipeline, strategy: :one_for_one)
+    Supervisor.init(children, strategy: :one_for_one)
   end
 end

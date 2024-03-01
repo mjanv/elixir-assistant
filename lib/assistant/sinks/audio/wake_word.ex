@@ -1,19 +1,11 @@
 defmodule Assistant.Agents.WakeWord do
   @moduledoc false
 
-  use Assistant.Agent
+  use GenServer
 
   alias Assistant.Models.Picovoice
 
   @wait 5_000
-
-  @impl true
-  def init(_args) do
-    Logger.info("[#{__MODULE__}] Starting.")
-    Process.send_after(self(), :listen, 100)
-    config = Application.fetch_env!(:assistant, :picovoice)
-    {:ok, %{config: config}}
-  end
 
   @impl true
   def handle_info(:listen, %{config: config} = state) do

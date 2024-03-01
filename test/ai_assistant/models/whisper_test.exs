@@ -5,8 +5,10 @@ defmodule Assistant.Models.WhisperTest do
 
   alias Assistant.Models.Whisper
 
-  @tag timeout: :infinity
-  test "Whisper speech-to-text models can be built" do
-    %Nx.Serving{} = Whisper.build("tiny")
+  @tag :bumblebee
+  test "Whisper speech-to-text models can be used to predict" do
+    text = Whisper.predict(:fr, {:file, "30e7edbf45.mp3"})
+
+    assert text == " Bonjour, comment allez-vous ?"
   end
 end

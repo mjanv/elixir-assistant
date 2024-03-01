@@ -2,6 +2,15 @@
   Messages
 </.header>
 
+<%= inspect(@agents) %>
+
+<.simple_form for={@form} phx-change="validate" phx-submit="save">
+  <.input field={@form[:query]} type="text" label="Query" />
+  <:actions>
+    <.button>Save</.button>
+  </:actions>
+</.simple_form>
+
 <.table id="messages" rows={@streams.messages}>
   <:col :let={{_, message}} label="text"><%= message.text %></:col>
 </.table>

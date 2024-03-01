@@ -1,4 +1,4 @@
-defmodule Assistant.Agents.TwitchChat do
+defmodule Assistant.Sinks.Twitch.TwitchChat do
   @moduledoc false
 
   use WebSockex
@@ -11,9 +11,8 @@ defmodule Assistant.Agents.TwitchChat do
   end
 
   def handle_connect(_conn, state) do
-    config = Application.fetch_env!(:assistant, :twitch)
-
     Task.async(fn ->
+      config = Application.fetch_env!(:assistant, :twitch)
       request = "CAP REQ :twitch.tv/membership twitch.tv/tags twitch.tv/commands"
       WebSockex.send_frame(__MODULE__, {:text, request})
       WebSockex.send_frame(__MODULE__, {:text, "PASS oauth:#{config[:oauth_token]}"})

@@ -8,7 +8,8 @@ config :assistant, :picovoice,
 config :assistant, :eleven_labs,
   api_url: "https://api.elevenlabs.io/v1",
   api_key: System.get_env("ELEVEN_LABS_API_KEY"),
-  voice_id: "LcfcDJNUP1GQjkzn1xUU"
+  voice_id: "LcfcDJNUP1GQjkzn1xUU",
+  model_id: "eleven_monolingual_v1"
 
 config :assistant, :openai,
   api_url: "https://api.openai.com/v1",
@@ -78,5 +79,7 @@ config :wallaby,
   base_url: "https://jardin-du-the.com"
 
 config :wallaby, :geckodriver, path: "./geckodriver"
+
+config :nx, :default_backend, EXLA.Backend
 
 import_config "#{config_env()}.exs"

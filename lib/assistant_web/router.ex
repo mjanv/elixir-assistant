@@ -14,7 +14,7 @@ defmodule AssistantWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/messages", DashboardLive.Index, :index
+    live "/session/:id", DashboardLive.Index, :index
     live "/page", PageLive.Index, :index
     live "/tea", TeaLive.Index, :index
   end

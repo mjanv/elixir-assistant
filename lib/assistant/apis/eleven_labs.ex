@@ -1,52 +1,58 @@
 defmodule Assistant.Apis.ElevenLabs do
   @moduledoc false
 
-  def api do
-    config = Application.fetch_env!(:assistant, :eleven_labs)
+  def get(url) do
+    :assistant
+    |> Application.fetch_env!(:eleven_labs)
+    |> then(fn config ->
+      Req.new(
+        base_url: config[:api_url],
+        headers: [{"xi-api-key", config[:api_key]}]
+      )
+    end)
+    |> Req.get(
+      url: url,
+      headers: [{"accept", "application/json"}]
+    )
+  end
 
+  def models, do: get("models")
+  def voices, do: get("voices")
+
+  def post({config, url, json}) do
     Req.new(
       base_url: config[:api_url],
       headers: [{"xi-api-key", config[:api_key]}]
     )
-  end
-
-  def voice do
-    Application.fetch_env!(:assistant, :eleven_labs)[:voice_id]
-  end
-
-  def models do
-    api()
-    |> Req.get!(
-      url: "models",
-      headers: [{"accept", "application/json"}]
-    )
-  end
-
-  def voices do
-    api()
-    |> Req.get!(
-      url: "voices",
-      headers: [{"accept", "application/json"}]
-    )
-  end
-
-  def generate(text) do
-    api()
-    |> Req.post!(
-      url: "text-to-speech/#{voice()}",
+    |> Req.post(
+      url: url,
       headers: [
         {"Content-Type", "application/json"},
         {"accept", "audio/mpeg"}
       ],
-      json: %{
-        "text" => text,
-        "model_id" => "eleven_monolingual_v1",
-        "voice_settings" => %{
-          "stability" => 0.5,
-          "similarity_boost" => 0.5
-        }
-      }
+      json: json
     )
-    |> Map.get(:body)
+  end
+
+  def generate(text) do
+    :assistant
+    |> Application.fetch_env!(:eleven_labs)
+    |> then(fn config ->
+      url = "text-to-speech/#{config[:voice_id]}"
+
+      json = %{
+        "text" => text,
+        "model_id" => config[:model_id],
+        "voice_settings" => %{"stability" => 0.5, "similarity_boost" => 0.5}
+      }
+
+      {config, url, json}
+    end)
+    |> post()
+    |> case do
+      {:ok, %Req.Response{status: 200, body: body}} -> {:ok, body}
+      {:ok, %Req.Response{} = response} -> {:error, response}
+      {:error, error} -> {:error, error}
+    end
   end
 end

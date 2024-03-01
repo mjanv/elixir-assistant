@@ -6,8 +6,8 @@ defmodule Assistant.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      Assistant.Supervisor,
-      AssistantWeb.Supervisor
+      AssistantWeb.Supervisor,
+      Assistant.Supervisor
     ]
 
     Supervisor.start_link(children,
