@@ -74,12 +74,6 @@ config :instructor,
 #   ]
 # ]
 
-config :wallaby,
-  driver: Wallaby.Chrome,
-  base_url: "https://jardin-du-the.com"
-
-config :wallaby, :geckodriver, path: "./geckodriver"
-
 config :nx, :default_backend, EXLA.Backend
 
 import_config "#{config_env()}.exs"

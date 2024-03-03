@@ -1,7 +1,7 @@
 import Config
 
 config :assistant, Assistant.Repo,
-  database: Path.expand("../assistant_dev.db", Path.dirname(__ENV__.file)),
+  database: Path.expand("../data/assistant_dev.db", Path.dirname(__ENV__.file)),
   pool_size: 5,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
@@ -28,8 +28,17 @@ config :assistant, AssistantWeb.Endpoint,
 
 config :assistant, dev_routes: true
 
+config :libcluster,
+  topologies: []
+
 config :logger, :console, format: "[$level] $message\n"
 
 config :phoenix, :stacktrace_depth, 20
 
 config :phoenix, :plug_init_mode, :runtime
+
+config :wallaby,
+  driver: Wallaby.Chrome,
+  base_url: "https://jardin-du-the.com"
+
+config :wallaby, :geckodriver, path: "./geckodriver"

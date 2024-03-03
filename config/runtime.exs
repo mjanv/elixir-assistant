@@ -18,4 +18,11 @@ if config_env() == :prod do
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
     secret_key_base: System.get_env("SECRET_KEY_BASE") || raise("SECRET_KEY_BASE missing")
+
+  config :libcluster,
+    topologies: [
+      gossip: [
+        strategy: Elixir.Cluster.Strategy.Gossip
+      ]
+    ]
 end

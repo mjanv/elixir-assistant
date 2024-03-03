@@ -29,10 +29,11 @@ voice-*.tar
 # Temporary files, for example, from tests.
 /tmp/
 
-# Database files
+# Data files
 *.db
 *.db-shm
 *.db-wal
+/data/
 
 # Audio files
 *.wav
@@ -40,3 +41,4 @@ voice-*.tar
 
 # Drivers
 chromedriver
+geckodriver

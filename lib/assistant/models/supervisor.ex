@@ -11,7 +11,8 @@ defmodule Assistants.Models.Supervisor do
   def init(_args) do
     children = [
       Assistant.Models.SpeechToText,
-      Assistant.Models.TextToSpeech
+      Assistant.Models.TextToSpeech,
+      Assistant.Models.IntentClassification
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

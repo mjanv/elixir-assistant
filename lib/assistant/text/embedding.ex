@@ -12,7 +12,7 @@ defmodule Assistant.Text.Embedding do
          %Nx.Serving{} = serving <- Bumblebee.Text.text_embedding(model_info, tokenizer) do
       serving
     else
-      {:error, _reason} -> :error
+      {:error, _reason} -> nil
     end
   end
 

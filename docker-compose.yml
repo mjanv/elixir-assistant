@@ -1,0 +1,41 @@
+version: "3.9"
+
+networks:
+  assistant-network:
+    driver: bridge
+
+services:
+  assistant-a:
+    container_name: assistant-a
+    build: .
+    hostname: assistant-a.docker
+    ports:
+      - "4001:4001"
+    environment:
+      RELEASE_NAME: assistant-a
+      PORT: 4001
+      DATABASE_PATH: /app/assistant.db
+      PHX_HOST: localhost:4001
+      SECRET_KEY_BASE: 0sPmgUa1JGSPjRf6cFJnUnIt/iOUY7YZw1FXwnnLwiklnWxkwLu77XDddv/HsCNk
+      BUMBLEBEE_OFFLINE: true
+    volumes:
+      - ~/.cache/bumblebee:/app/.bumblebee
+    networks:
+      - assistant-network
+  assistant-b:
+    container_name: assistant-b
+    build: .
+    hostname: assistant-b.docker
+    ports:
+      - "5001:5001"
+    environment:
+      RELEASE_NAME: assistant-b
+      PORT: 5001
+      DATABASE_PATH: /app/assistant.db
+      PHX_HOST: localhost:5001
+      SECRET_KEY_BASE: PeQSCFC+5ujFSb/SMpzXJryaRla6RUev3Vzcgr0ej9AErD/070ZLn1jvd4JlTBmC
+      BUMBLEBEE_OFFLINE: true
+    volumes:
+      - ~/.cache/bumblebee:/app/.bumblebee
+    networks:
+      - assistant-network

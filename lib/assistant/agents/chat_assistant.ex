@@ -3,11 +3,13 @@ defmodule Assistant.Agents.ChatAssistant do
 
   use Assistant.Agent
 
+  alias Assistant.Agents.{ChatAssistant2, DynamicSupervisor}
+
   def handle(state, {:chat, _text}) do
     # prompt = "You are a kind and helpful assistant. Respond always with one to two sentences."
     # response = Assistant.Apis.OpenAI.batch(text, prompt)
 
-    Assistant.Agents.DynamicSupervisor.start(Assistant.Agents.ChatAssistant2)
+    DynamicSupervisor.start(ChatAssistant2)
 
     {state, [{:reply, "???"}, {:chat, "hello"}]}
   end

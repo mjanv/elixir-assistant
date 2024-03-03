@@ -7,6 +7,11 @@ defmodule Assistant.Models.TextToSpeech do
 
   alias Assistant.Apis.ElevenLabs
 
+  def start_link(args) do
+    GenServer.start_link(__MODULE__, args, name: __MODULE__)
+  end
+
+  @impl true
   def init(_args) do
     Logger.info("[#{__MODULE__}] Starting.")
     {:ok, %{}}
@@ -16,7 +21,7 @@ defmodule Assistant.Models.TextToSpeech do
     GenServer.cast(__MODULE__, {:speak, text})
   end
 
-  @@impl
+  @impl true
   def handle_cast({:speak, text}, state) do
     text
     |> ElevenLabs.generate()

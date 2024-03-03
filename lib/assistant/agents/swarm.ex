@@ -8,9 +8,8 @@ defmodule Assistant.Agents.Swarm do
   end
 
   defmacro agents(group, var \\ quote(do: _), contents) do
-    IO.inspect(contents)
     var = Macro.escape(var)
-    contents = Macro.escape(contents, unquote: true) |> IO.inspect()
+    contents = Macro.escape(contents, unquote: true)
 
     quote bind_quoted: [group: group, var: var, contents: contents] do
       def start(unquote(var)), do: {unquote(group), unquote(contents)}

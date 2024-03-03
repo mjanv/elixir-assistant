@@ -18,12 +18,15 @@ defmodule Assistant.MixProject do
   def application do
     [
       mod: {Assistant.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: extra_applications(Mix.env())
     ]
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
+
+  defp extra_applications(:prod), do: [:logger, :runtime_tools]
+  defp extra_applications(_), do: [:logger, :runtime_tools, :wallaby]
 
   defp deps do
     [
@@ -47,9 +50,11 @@ defmodule Assistant.MixProject do
       # Backend
       {:req, "~> 0.4"},
       {:websockex, "~> 0.4"},
-      {:wallaby, "~> 0.30"},
+      {:wallaby, "~> 0.30", only: [:dev, :test]},
       {:rustler, "~> 0.31"},
-      {:membrane_sdk, "~> 0.1.0"},
+      # {:membrane_sdk, "~> 0.1.0"},
+      {:libcluster, "~> 3.3"},
+      {:libcluster_postgres, "~> 0.1"},
       # Machine learning
       {:instructor, "~> 0.0.5"},
       {:bumblebee, "~> 0.5"},
@@ -59,7 +64,8 @@ defmodule Assistant.MixProject do
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       # Developpement tools
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:tailwind_formatter, "~> 0.4.0", only: [:dev, :test], runtime: false}
     ]
   end
 

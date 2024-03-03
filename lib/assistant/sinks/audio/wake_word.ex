@@ -8,8 +8,12 @@ defmodule Assistant.Agents.WakeWord do
   @wait 5_000
 
   @impl true
+  def init(args) do
+    {:ok, args}
+  end
+
+  @impl true
   def handle_info(:listen, %{config: config} = state) do
-    Logger.info("[#{__MODULE__}] Listening.")
     Picovoice.detect(config[:access_token], config[:keyword_path], config[:model_path])
     Phoenix.PubSub.broadcast(Assistant.PubSub, "messages", {:message, "Oui ?"})
     path = Picovoice.register(config[:access_token], config[:keyword_path], config[:model_path])
