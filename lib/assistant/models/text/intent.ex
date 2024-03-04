@@ -1,4 +1,4 @@
-defmodule Assistant.Models.IntentClassification do
+defmodule Assistant.Models.Text.Intent do
   @moduledoc false
 
   use Supervisor

@@ -16,7 +16,10 @@ services:
     environment:
       RELEASE_NAME: assistant-a
       PORT: 4001
-      DATABASE_PATH: /app/assistant.db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: assistant_dev
+      DB_HOST: assistant-database
       PHX_HOST: localhost:4001
       SECRET_KEY_BASE: 0sPmgUa1JGSPjRf6cFJnUnIt/iOUY7YZw1FXwnnLwiklnWxkwLu77XDddv/HsCNk
       BUMBLEBEE_OFFLINE: true
@@ -35,7 +38,10 @@ services:
     environment:
       RELEASE_NAME: assistant-b
       PORT: 5001
-      DATABASE_PATH: /app/assistant.db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: assistant_dev
+      DB_HOST: assistant-database
       PHX_HOST: localhost:5001
       SECRET_KEY_BASE: PeQSCFC+5ujFSb/SMpzXJryaRla6RUev3Vzcgr0ej9AErD/070ZLn1jvd4JlTBmC
       BUMBLEBEE_OFFLINE: true
@@ -59,14 +65,15 @@ services:
       - "8001:8080"
     networks:
       - assistant-network
-  # database:
-  #   container_name: assistant-database
-  #   image: postgres:15
-  #   environment:
-  #     POSTGRES_USER: assistant
-  #     POSTGRES_PASSWORD: assistant
-  #     POSTGRES_DB: assistant
-  #   ports:
-  #     - "5432:5432"
-  #   networks:
-  #     - assistant-network
+  database:
+    container_name: assistant-database
+    image: pgvector/pgvector:pg16
+    hostname: assistant-livebook.docker
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: assistant_dev
+    ports:
+      - "5432:5432"
+    networks:
+      - assistant-network

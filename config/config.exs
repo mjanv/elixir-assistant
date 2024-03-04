@@ -27,6 +27,8 @@ config :assistant,
   ecto_repos: [Assistant.Repo],
   generators: [binary_id: true]
 
+config :assistant, Assistant.Repo, types: Assistant.PostgrexTypes
+
 config :assistant, AssistantWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [

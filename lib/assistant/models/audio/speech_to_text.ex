@@ -1,4 +1,4 @@
-defmodule Assistant.Models.SpeechToText do
+defmodule Assistant.Models.Audio.SpeechToText do
   @moduledoc false
 
   use Supervisor

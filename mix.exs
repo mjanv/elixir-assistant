@@ -33,8 +33,6 @@ defmodule Assistant.MixProject do
       # Web
       {:phoenix, "~> 1.7"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.10"},
-      {:ecto_sqlite3, "~> 0.15"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.19"},
@@ -48,6 +46,9 @@ defmodule Assistant.MixProject do
       {:dns_cluster, "~> 0.1"},
       # {:ex_webrtc, "~> 0.1.0"},
       # Backend
+      {:ecto_sql, "~> 3.10"},
+      {:ecto_sqlite3, "~> 0.15"},
+      {:pgvector, "~> 0.2.0"},
       {:req, "~> 0.4"},
       {:websockex, "~> 0.4"},
       {:wallaby, "~> 0.30", only: [:dev, :test]},

@@ -1,7 +1,10 @@
 import Config
 
 config :assistant, Assistant.Repo,
-  database: Path.expand("../data/assistant_dev.db", Path.dirname(__ENV__.file)),
+  username: "postgres",
+  password: "postgres",
+  database: "assistant_dev",
+  hostname: "localhost",
   pool_size: 5,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true

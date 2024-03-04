@@ -1,4 +1,4 @@
-defmodule Assistant.Models.TextToSpeech do
+defmodule Assistant.Models.Audio.TextToSpeech do
   @moduledoc false
 
   use GenServer

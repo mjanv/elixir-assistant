@@ -6,7 +6,10 @@ end
 
 if config_env() == :prod do
   config :assistant, Assistant.Repo,
-    database: System.get_env("DATABASE_PATH") || raise("DATABASE_PATH is missing"),
+    username: System.get_env("DB_USERNAME") || raise("DB_USERNAME missing"),
+    password: System.get_env("DB_PASSWORD") || raise("DB_PASSWORD missing"),
+    database: System.get_env("DB_NAME") || raise("DB_NAME missing"),
+    hostname: System.get_env("DB_HOST") || raise("DB_HOST missing"),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
 
   config :assistant, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")

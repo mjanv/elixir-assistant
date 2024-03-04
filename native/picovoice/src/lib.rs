@@ -111,4 +111,4 @@ fn query(access_key: &str, keyword_path: &str, model_path: &str) -> String {
     return String::from(path);
 }
 
-rustler::init!("Elixir.Assistant.Models.Picovoice", [query]);
+rustler::init!("Elixir.Assistant.Models.Audio.WakeWord", [query]);

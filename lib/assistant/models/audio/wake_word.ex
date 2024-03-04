@@ -1,4 +1,4 @@
-defmodule Assistant.Models.Picovoice do
+defmodule Assistant.Models.Audio.WakeWord do
   @moduledoc false
 
   # use Rustler, otp_app: :assistant, crate: "picovoice"
