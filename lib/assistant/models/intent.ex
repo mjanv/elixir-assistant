@@ -29,7 +29,7 @@ defmodule Assistant.Models.IntentClassification do
     end
   end
 
-  def predict(name, input, threshold \\ 0.5) do
+  def predict(name, input, threshold \\ 0.8) do
     name
     |> Serving.batched_run(input)
     |> case do

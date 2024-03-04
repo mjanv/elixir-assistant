@@ -7,7 +7,9 @@ networks:
 services:
   assistant-a:
     container_name: assistant-a
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     hostname: assistant-a.docker
     ports:
       - "4001:4001"
@@ -24,7 +26,9 @@ services:
       - assistant-network
   assistant-b:
     container_name: assistant-b
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     hostname: assistant-b.docker
     ports:
       - "5001:5001"
@@ -39,3 +43,30 @@ services:
       - ~/.cache/bumblebee:/app/.bumblebee
     networks:
       - assistant-network
+  livebook:
+    container_name: assistant-livebook
+    image: ghcr.io/livebook-dev/livebook:edge
+    hostname: assistant-livebook.docker
+    environment:
+      LIVEBOOK_PASSWORD: secretpassword
+      LIVEBOOK_DISTRIBUTION: name
+      LIVEBOOK_PORT: 8080
+      LIVEBOOK_APPS_PATH: ./notebooks
+      LIVEBOOK_NODE: assistant-livebook@assistant-livebook.docker
+      LIVEBOOK_COOKIE: secret
+      LIVEBOOK_DEFAULT_RUNTIME: attached:assistant-a@assistant-a.docker:secret
+    ports:
+      - "8001:8080"
+    networks:
+      - assistant-network
+  # database:
+  #   container_name: assistant-database
+  #   image: postgres:15
+  #   environment:
+  #     POSTGRES_USER: assistant
+  #     POSTGRES_PASSWORD: assistant
+  #     POSTGRES_DB: assistant
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - assistant-network
