@@ -7,8 +7,6 @@ defmodule Assistant.Agent do
     quote do
       use GenServer
 
-      require Logger
-
       @timeout unquote(timeout)
 
       def start_link(args) do
@@ -16,13 +14,11 @@ defmodule Assistant.Agent do
       end
 
       @impl true
-      def init(%{id: id, session: session}) do
-        Logger.info("[#{__MODULE__}] Starting.")
-
+      def init(%{id: id, session: session} = args) do
         Phoenix.PubSub.subscribe(Assistant.PubSub, "session:#{session}")
         AssistantWeb.Presence.track(self(), "session:#{session}", id, %{})
 
-        agent = %{id: id, session: session, state: %{}}
+        agent = %{id: id, session: session, state: state(args)}
 
         {:ok, agent, @timeout}
       end
@@ -48,6 +44,9 @@ defmodule Assistant.Agent do
         end)
         |> then(fn {state, _} -> {:noreply, %{agent | state: state}, @timeout} end)
       end
+
+      def state(_args), do: %{}
+      defoverridable state: 1
 
       def handle(state, _event), do: {state, []}
       defoverridable handle: 2

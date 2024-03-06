@@ -3,8 +3,6 @@ defmodule Assistant.Tea do
 
   use Ecto.Schema
 
-  alias Assistant.Models.Chat
-
   @primary_key false
   embedded_schema do
     field :name, :string
@@ -12,14 +10,22 @@ defmodule Assistant.Tea do
     field :start_price, :integer
     field :ingredients, {:array, :string}
   end
+end
+
+defmodule Assistant.Tea.Prompts do
+  @moduledoc false
+
+  alias Assistant.Models.Chat.ExInstructor
 
   def describe(query) do
-    __MODULE__
-    |> Chat.response("Describe this tea whose French webpage is: #{query}")
+    ExInstructor.response(
+      Assistant.Tea,
+      "What is the name of this tea whose French webpage is: #{query}"
+    )
   end
 end
 
-defmodule Assistant.Storage.Tea.Embeddings do
+defmodule Assistant.Tea.Embeddings do
   @moduledoc false
 
   use Ecto.Schema

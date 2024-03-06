@@ -10,7 +10,10 @@ defmodule Assistant.Sinks.Supervisor do
   @impl true
   def init(_args) do
     children = [
-      # Assistant.Sinks.Audio.LocalPlayer
+      # Assistant.Sinks.Audio.WakeWord,
+      # Assistant.Sinks.Audio.LocalPlayer,
+      Assistant.Sinks.Discord.Supervisor,
+      Assistant.Sinks.DynamicSupervisor
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

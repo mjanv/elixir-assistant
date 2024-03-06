@@ -1,4 +1,4 @@
-defmodule Assistants.Models.Supervisor do
+defmodule Assistant.Models.Supervisor do
   @moduledoc false
 
   use Supervisor

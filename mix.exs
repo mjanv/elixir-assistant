@@ -46,6 +46,7 @@ defmodule Assistant.MixProject do
       {:dns_cluster, "~> 0.1"},
       # {:ex_webrtc, "~> 0.1.0"},
       # Backend
+      {:timex, "~> 3.7"},
       {:ecto_sql, "~> 3.10"},
       {:ecto_sqlite3, "~> 0.15"},
       {:pgvector, "~> 0.2.0"},
@@ -53,6 +54,7 @@ defmodule Assistant.MixProject do
       {:websockex, "~> 0.4"},
       {:wallaby, "~> 0.30", only: [:dev, :test]},
       {:rustler, "~> 0.31"},
+      {:nostrum, "~> 0.8"},
       # {:membrane_sdk, "~> 0.1.0"},
       {:libcluster, "~> 3.3"},
       {:libcluster_postgres, "~> 0.1"},

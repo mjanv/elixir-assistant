@@ -76,6 +76,9 @@ config :instructor,
 #   ]
 # ]
 
+config :nostrum,
+  token: System.get_env("DISCORD_BOT_TOKEN")
+
 config :nx, :default_backend, EXLA.Backend
 
 import_config "#{config_env()}.exs"

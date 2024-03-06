@@ -11,13 +11,11 @@ defmodule Assistant.Supervisor do
   def init(_args) do
     children = [
       Assistant.Repo,
-      {Ecto.Migrator,
-       repos: Application.fetch_env!(:assistant, :ecto_repos),
-       skip: System.get_env("RELEASE_NAME") != nil},
-      Assistant.Sinks.Supervisor,
-      Assistants.Models.Supervisor,
-      Assistant.Agents.DynamicSupervisor,
-      Assistant.Sinks.DynamicSupervisor
+      Assistant.Repo.migrator(System.get_env("RELEASE_NAME") != nil),
+      # Assistant.Agents.Supervisor,
+      # Assistant.Apis.Supervisor,
+      # Assistant.Models.Supervisor,
+      Assistant.Sinks.Supervisor
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

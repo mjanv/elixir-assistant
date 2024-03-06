@@ -1,8 +1,5 @@
 import Config
 
-config :assistant,
-  pipeline: []
-
 config :assistant, Assistant.Repo,
   database: Path.expand("../data/assistant_test.db", Path.dirname(__ENV__.file)),
   pool_size: 5,

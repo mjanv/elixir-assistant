@@ -5,7 +5,7 @@ defmodule AssistantWeb.TeaLive.Index do
 
   alias Phoenix.LiveView.AsyncResult
 
-  alias Assistant.{Tea, Web}
+  alias Assistant.{Apis.Web, Tea}
 
   @impl true
   def mount(_params, _session, socket) do
@@ -25,7 +25,7 @@ defmodule AssistantWeb.TeaLive.Index do
     socket
     |> start_async(:tea, fn ->
       {:ok, text} = Web.HtmlScraper.extract_text(query)
-      {:ok, tea} = Tea.describe(text)
+      {:ok, tea} = Tea.Prompts.describe(text)
       tea
     end)
     |> put_flash(:info, "Tea extraction started")

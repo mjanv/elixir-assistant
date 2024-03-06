@@ -10,7 +10,7 @@ fn start_voice_activity_detection(access_key: &str) -> Cobra {
 
 fn start_recorder(frame_length: i32) -> PvRecorder {
     let recorder = PvRecorderBuilder::new(frame_length)
-        .device_index(1)
+        .device_index(2)
         .init()
         .expect("Failed to initialize pvrecorder");
 
@@ -56,7 +56,7 @@ fn query(access_key: &str, keyword_path: &str, model_path: &str) -> String {
 
     loop {
         if !recorder.is_recording() {
-            state = State::Failed;
+            _ = State::Failed;
             break;
         }
 
